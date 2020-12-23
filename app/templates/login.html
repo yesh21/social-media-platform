@@ -1,0 +1,53 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<div class="container h-100">
+  <div class="justify-content-center align-items-center" style="position: relative; top: 10%;">
+    <div class="card" style="width: 100%">
+      <h4 class="card-header">Login</h4>
+
+      
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="alert alert-danger", role= "alert">
+      <ul class="list">
+        {% for message in messages %}
+          <p style="color: red;">{{ message }} </p>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+{% endwith %}
+
+
+
+{% block content %}
+    <div class="container">
+      <form class="form-signin" method="POST" action="/login">
+        <br>
+        <br>
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+          <label>Email / Username:</label>
+          <div class="justify-content-center align-items-center">
+        {{ form.email (class_='form-control') }}
+          </div>
+        </div>
+        <label>Password:</label>
+        <div class ="justify-content-center align-items-center">
+        {{ form.password (class_='form-control') }}
+        </div>
+        <br>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      </form>
+      <form method="get" style="position: relative; top: 60%;left:22%" action="/signup">
+        <p>if u haven't created account,</p>
+        <button type="submit" class="btn btn-success">Sign UP!</button>
+    </form>
+      
+    </div> <!-- /container -->
+  </div>
+</div>
+
+{% endblock %}
