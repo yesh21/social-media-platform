@@ -4,21 +4,23 @@
 
 <div class="container h-100">
   <div class="justify-content-center align-items-center" style="position: relative; top: 10%;">
-    <div class="card" style="width: 100%">
+    <div class="card" style="width: 80%">
       <h4 class="card-header">Login</h4>
 
       
-  {% with messages = get_flashed_messages() %}
-  {% if messages %}
-    <div class="alert alert-danger", role= "alert">
-      <ul class="list">
-        {% for message in messages %}
-          <p style="color: red;">{{ message }} </p>
-        {% endfor %}
-      </ul>
-    </div>
-  {% endif %}
-{% endwith %}
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+          
+            {% for message in messages %}
+            <div >
+            <div class="alert alert-danger" role="alert">
+              <p class="text-center" style="color: red;">{{ message }} </p>
+            </div>
+            </div>
+            {% endfor %}
+          
+      {% endif %}
+    {% endwith %}
 
 
 
@@ -39,11 +41,16 @@
         {{ form.password (class_='form-control') }}
         </div>
         <br>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <div style="display: flex;justify-content: center;">
+        <button class="btn btn-lg btn-primary btn-block" type="submit" style="width: 80%;justify-content: center;">Sign in</button>
+      </div>
       </form>
-      <form method="get" style="position: relative; top: 60%;left:22%" action="/signup">
-        <p>if u haven't created account,</p>
-        <button type="submit" class="btn btn-success">Sign UP!</button>
+      <hr style="border-top: 1px solid black; width:50%">
+      <form method="get" style="position: relative; top: 60%;left:30%" action="/signup">
+        <div class="row g-3" style="align-items: center;">
+        <p style = "margin-bottom: 0rem;">If u haven't created account,</p>
+        <button type="submit" class="btn btn-outline-success btn-sm">Sign UP!</button>
+        </div>
     </form>
       
     </div> <!-- /container -->

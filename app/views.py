@@ -41,8 +41,8 @@ def signup():
         new_user = models.User(username=form.username.data, email=form.email.data, password=hashed_password)
         db.session.add(new_user)
         db.session.commit()
-
-        return '<h1>New user has been created!</h1>'
+        flash("new account created")
+        return render_template('login.html', form=form)
 
     return render_template('signup.html', form=form)
 
