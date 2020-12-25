@@ -3,7 +3,7 @@
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
 <div class="container h-100">
-  <div class="justify-content-center align-items-center" style="position: relative; top: 10%;">
+  <div class="justify-content-center align-items-center" style="position: relative; top: 10%; font-weight: 600;">
     <div class="card" style="width: 100%">
       <h4 class="card-header">Sign Up</h4>
 <link rel="stylesheet" href="{{url_for('.static', filename='signin.css')}}">
@@ -77,8 +77,8 @@
   
   </form>
   <hr style="border-top: 1px solid black; width:50%">
-  <form method="get" style="position: relative; top: 60%;left:30%" action="/login">
-    <div class="row g-3">
+  <form method="get" action="/login">
+    <div style="display: flex;justify-content: center;">
     <p style = "margin-bottom: 0rem;">If u are already an existing user,</p>
     <button type="submit" class="btn btn-outline-primary btn-sm">Log in!</button>
   </div>

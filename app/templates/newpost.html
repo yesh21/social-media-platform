@@ -1,0 +1,18 @@
+
+{% block content %}
+
+<div class="ui main text container">
+
+  <h1 class="ui header">New Post:</h1>
+
+  <form class="ui form" action="{{ url_for('newpost') }}" method="post">
+    {{ form.hidden_tag() }}
+    {{ form.title }}
+    {{ form.message }}
+    <br>
+    {{ form.submitpost(class_='ui button') }}
+  </form>
+
+</div>
+
+{% endblock %}
