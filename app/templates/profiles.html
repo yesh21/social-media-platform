@@ -1,63 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <!--  This file has been downloaded from bootdey.com    @bootdey on twitter -->
+    <!--  All snippets are MIT license http://bootdey.com/license -->
+    <title>Edit Profile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+    	body{
+    margin-top:20px;
+    background:#f8f8f8
+}
+    </style>
+</head>
+<body>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container">
+<div class="row flex-lg-nowrap">
+  <div class="col">
+    <div class="row">
+      <div class="col mb-3">
+        <div class="card">
+            <form action="" method="POST" enctype=multipart/form-data>
+          <div class="card-body">
+            <div class="e-profile">
+              <div class="row">
+                <div class="col-12 col-sm-auto mb-3">
+                  <div class="mx-auto" style="width: 140px;">
+                    <div class="d-flex justify-content-center align-items-center rounded" style="height: 140px; background-color: rgb(233, 236, 239);">
+                        <img src="{{url_for('static', filename='Image_UPLOADS/profiles/'+current_user.userid|string+'.png')}}" class="img-fluid" alt="image">
+                    </div>
+                  </div>
+                </div>
+                <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
+                  <div class="text-center text-sm-left mb-2 mb-sm-0">
+                    <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">{{current_user.firstname}} {{current_user.lastname}}</h4>
+                    <p class="mb-0">@{{current_user.username}}</p>
+                
+                        <div class="custom-file" >
+                            <input type="file" name="image" class="custom-file-input" id="image">
+                            <label class="custom-file-label" for="customFileLangHTML" data-browse="Upload"></label>
+                          </div>
+                  </div>
 
-
-<img src="{{url_for('static', filename='Image_UPLOADS/profiles/'+current_user.userid|string+'.png')}}" align="middle" />
-
-<form action="" method="POST" enctype=multipart/form-data>
-    <div class="form-group">
-        <div class="file-field">
-            <div class="z-depth-1-half mb-2">
-                <img src="{{url_for('static', filename='Image_UPLOADS/profiles/'+current_user.userid|string+'.png')}}" class="img-fluid" alt="image">
+                  <div class="text-center text-sm-right">
+                    <span class="badge badge-secondary">administrator</span>
+                    <div class="text-muted"><small>Joined 09 Dec 2017</small></div>
+                  </div>
+                </div>
+              </div>
+              <ul class="nav nav-tabs">
+                <li class="nav-item"><a href="" class="active nav-link">Profile Edit</a></li>
+              </ul>
+              <div class="tab-content pt-3">
+                <div class="tab-pane active">
+                  <form class="form" novalidate="">
+                    <div class="row">
+                      <div class="col">
+                        <div class="row">
+                          <div class="col">
+                            <div class="form-group">
+                              <label>First Name</label>
+                              <input class="form-control" type="text" name="name" placeholder={{current_user.firstname}} value={{current_user.firstname}}>
+                            </div>
+                          </div>
+                          <div class="col">
+                            <div class="form-group">
+                              <label>Last name</label>
+                              <input class="form-control" type="text" name="username" placeholder={{current_user.lastname}} value={{current_user.lastname}}>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col">
+                            <div class="form-group">
+                              <label>Email</label>
+                              <input class="form-control" type="text" placeholder={{current_user.email}}>
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label>Username</label>
+                              <input class="form-control" type="text" name="username" placeholder={{current_user.username}} value={{current_user.username}}>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col mb-3">
+                            <div class="form-group">
+                              <label>About</label>
+                              <textarea class="form-control" rows="5" placeholder="My Bio"></textarea>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12 col-sm-6 mb-3">
+                        <div class="mb-2"><b>Change Password</b></div>
+                        <div class="row">
+                          <div class="col">
+                            <div class="form-group">
+                              <label>Current Password</label>
+                              <input class="form-control" type="password" placeholder="••••••">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col">
+                            <div class="form-group">
+                              <label>New Password</label>
+                              <input class="form-control" type="password" placeholder="••••••">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col">
+                            <div class="form-group">
+                              <label>Confirm <span class="d-none d-xl-inline">Password</span></label>
+                              <input class="form-control" type="password" placeholder="••••••"></div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col d-flex justify-content-end">
+                        <input class="btn btn-primary" type="submit" value="Save Changes">
+                      </div>
+                    </div>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <div class="custom-file">
-        <input type="file" name="image" class="custom-file-input" id="image">
-        <label class="custom-file-label" for="customFileLangHTML" data-browse="Upload">Upload Photo</label>
       </div>
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label for="forename">forename</label>
-            <input type="text" class="form-control" id="forename" name="forename" placeholder="ชื่อ">
-        </div>
-        <div class="form-group col-md-6">
-            <label for="lastname">lastname</label>
-            <input type="text" class="form-control" id="lastname" name="lastname" placeholder="นามสกุล">
-        </div>
-    </div>
-
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label for="dob">dob</label>
-            <input type="date" class="form-control" id="dob" name="dob" placeholder="วันเดือนปีเกิด">
-        </div>
-        <div class="form-group col-md-6">
-            <label for="dob">dob</label>
-            <input type="text" class="form-control" id="about" name="about" placeholder="เกี่ยวกับฉัน">
-        </div>
-
-    </div>
-
-    <div class="form-row">
-        <div class="form-group col-md-12">
-            <label for="dob">dob</label>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="m" checked>
-                <label class="form-check-label" for="exampleRadios1">
-    ชาย
-  </label>
+    </form>
+      <div class="col-12 col-md-3 mb-3">
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="px-xl-3">
+              <button onclick="window.location.href='/logout'" class="btn btn-block btn-secondary">
+                <i class="fa fa-sign-out"></i>
+                <span>Logout</span>
+              </button>
             </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="f">
-                <label class="form-check-label" for="exampleRadios2">
-    หญิง
-  </label>
-            </div>
+          </div>
         </div>
+        <div class="card">
+          <div class="card-body">
+            <h6 class="card-title font-weight-bold">Support</h6>
+            <p class="card-text">Get fast, free help from our friendly assistants.</p>
+            <button type="button" class="btn btn-primary">Contact Us</button>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+</div>
+</div>
 
-
-    <input type="hidden" id="dtime" name="dtime" value="{{ now1 }}">
-    <input class="btn btn-primary" type="submit" value="บันทึกข้อมูล"> {% if error %}
-    <p class="alert alert-danger"><strong>Error:</strong> {{ error }} {% endif %}
-</form>
+<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	
+</script>
+</body>
+</html>

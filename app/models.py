@@ -24,6 +24,6 @@ class Post(db.Model):
 	postid = db.Column(db.Integer, primary_key=True, autoincrement=True)
 	title = db.Column(db.String(500), nullable=False)
 	user = db.Column(db.Integer, db.ForeignKey('user.userid'))
-	message = db.Column(db.String(500), nullable=False)
+	message = db.Column(db.Text, nullable=False)
 	userposts = db.relationship("User", back_populates="posts")
 

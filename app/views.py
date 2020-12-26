@@ -43,7 +43,6 @@ def login():
             if check_password_hash(user.password, form.password.data):
                 session['email'] = user.email
                 login_user(user, remember=form.remember.data)
-                flash('Logged in successfully.')
                 return redirect(url_for('home'))
             else:
                 flash("incorrect password")
@@ -103,19 +102,19 @@ def logout():
     flash("logout sucessfully")
     return redirect(url_for('login'))
 
-@app.route('/profileq',methods=['GET','POST'])
+@app.route('/edit',methods=['GET','POST'])
 @login_required
-def profileq():
+def edit():
     if request.method == "POST":
         files = request.files['image']
         image = files.filename
         file = request.files['image']
         if file and allowed_file(file.filename):
                 filename = secure_filename(file.filename)
-                file.save(os.path.join(app.config['IMAGE_UPLOADS1'], str(current_user.userid)+'.png'))  
-                return render_template("profiles.html")
+                file.save(os.path.join(app.config['IMAGE_UPLOADS1'], str(current_user.userid)+'.png')) 
+                flash("new image uploaded")
+                return render_template("home.html")
         else:
-            flash("image type not supported")
             return render_template("profiles.html")
     else:
      return render_template("profiles.html")

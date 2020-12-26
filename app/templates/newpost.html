@@ -8,11 +8,72 @@
   <form class="ui form" action="{{ url_for('newpost') }}" method="post">
     {{ form.hidden_tag() }}
     {{ form.title }}
-    {{ form.message }}
-    <br>
-    {{ form.submitpost(class_='ui button') }}
-  </form>
-
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
 </div>
+<div class="container h-100 d-flex justify-content-center">
+
+<div class="card gedf-card" style=" width:100%; border-radius:30px;border: 0;" >
+  <div class="card-header" style="width:100%; border-radius:30px">
+      <div class="d-flex justify-content-between align-items-center">
+          <div class="d-flex justify-content-between align-items-center">
+              <div class="mr-2">
+                  <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
+              </div>
+              <div class="ml-2">
+                  <div class="h5 m-0">@{{current_user.username}}</div>
+                  <div class="h7 text-muted">{{current_user.firstname}} {{current_user.lastname}}</div>
+              </div>
+          </div>
+          <div>
+              
+          </div>
+      </div>
+      <br>
+<div class="card gedf-card d-flex justify-content-center align-self-center">
+  <div class="card-header ">
+      <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+          <li class="nav-item">
+              <a class="nav-link active" id="posts-tab" data-toggle="tab" href="#posts" role="tab" aria-controls="posts" aria-selected="true">Create Post</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" id="images-tab" data-toggle="tab" role="tab" aria-controls="images" aria-selected="false" href="#images">Images</a>
+          </li>
+      </ul>
+  </div>
+  <div class="card-body">
+      <div class="tab-content" id="myTabContent">
+          <div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
+              <div class="form-group">
+                  <label class="sr-only" for="message">post</label>
+                  {{ form.message(class_='form-control') }}
+              </div>
+
+          </div>
+          <div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="images-tab">
+              <div class="form-group">
+                  <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="customFile">
+                      <label class="custom-file-label" for="customFile">Upload image</label>
+                  </div>
+              </div>
+              <div class="py-4"></div>
+          </div>
+      </div>
+      <div class="btn-toolbar justify-content-between">
+          <div class="btn-group">
+              {{ form.submitpost(class_='btn btn-primary') }}
+          </div>
+      </div>
+  </div>
+</div>
+</form>
 
 {% endblock %}
