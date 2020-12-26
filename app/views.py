@@ -75,7 +75,8 @@ def home():
 @app.route('/profile')
 @login_required
 def profile():
-    return render_template('profile.html')
+    userposts = models.Post.query.filter_by(user = current_user.userid).all()
+    return render_template('profile.html',userposts = userposts)
 
 @app.route('/newpost', methods=['GET', 'POST'])
 @login_required
@@ -86,6 +87,10 @@ def newpost():
 		post = models.Post(title=form.title.data, user=current_user.userid, message=form.message.data)
 		db.session.add(post)
 		db.session.commit()
+		file = request.files['image']
+		if file and allowed_file(file.filename):
+				filename = secure_filename(file.filename)
+				file.save(os.path.join(app.config['IMAGE_UPLOADS'], str(current_user.userid)+'.png')) 
 
 		flash("new post created")
 
@@ -115,6 +120,6 @@ def edit():
                 flash("new image uploaded")
                 return render_template("home.html")
         else:
-            return render_template("profiles.html")
+            return render_template("edit.html")
     else:
-     return render_template("profiles.html")
+     return render_template("edit.html")
