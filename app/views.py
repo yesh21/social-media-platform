@@ -4,14 +4,25 @@ from .forms import LoginForm, SignupForm,PostForm
 from app import db, models
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from werkzeug.utils import secure_filename
+import os
 
 
 db.create_all()
 app.config['SECRET_KEY'] = 'Thisissupposedtobesecret!'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+app.config["IMAGE_UPLOADS"] = "app/static/Image_UPLOADS/uploads/"
+app.config["IMAGE_UPLOADS1"] = "app/static/Image_UPLOADS/profiles/"
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
+
+
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -62,6 +73,11 @@ def signup():
 def home():
     return 'done successfully'
 
+@app.route('/profile')
+@login_required
+def profile():
+    return render_template('profile.html')
+
 @app.route('/newpost', methods=['GET', 'POST'])
 @login_required
 def newpost():
@@ -86,3 +102,20 @@ def logout():
     logout_user()
     flash("logout sucessfully")
     return redirect(url_for('login'))
+
+@app.route('/profileq',methods=['GET','POST'])
+@login_required
+def profileq():
+    if request.method == "POST":
+        files = request.files['image']
+        image = files.filename
+        file = request.files['image']
+        if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                file.save(os.path.join(app.config['IMAGE_UPLOADS1'], str(current_user.userid)+'.png'))  
+                return render_template("profiles.html")
+        else:
+            flash("image type not supported")
+            return render_template("profiles.html")
+    else:
+     return render_template("profiles.html")
