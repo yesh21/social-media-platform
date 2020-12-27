@@ -4,8 +4,8 @@ from datetime import datetime
 
 followers = db.Table(
     'followers',
-    db.Column('follower_id', db.Integer, db.ForeignKey('user.userid')),
-    db.Column('followed_id', db.Integer, db.ForeignKey('user.userid'))
+    db.Column('follower_id', db.String(500), db.ForeignKey('user.username')),
+    db.Column('followed_id', db.String(500), db.ForeignKey('user.username'))
 )
 
 class User(db.Model, UserMixin):
@@ -21,8 +21,8 @@ class User(db.Model, UserMixin):
 	posts = db.relationship('Post', back_populates="userposts")
 	followed = db.relationship('User',
                                secondary=followers,
-                               primaryjoin=(followers.c.follower_id == userid),
-                               secondaryjoin=(followers.c.followed_id == userid),
+                               primaryjoin=(followers.c.follower_id == username),
+                               secondaryjoin=(followers.c.followed_id == username),
                                backref=db.backref('followers', lazy='dynamic'),
                                lazy='dynamic')
 	def get_id(self):
@@ -33,14 +33,14 @@ class User(db.Model, UserMixin):
 			return self
 	def is_following(self, user):
 		return self.followed.filter(
-			followers.c.followed_id == user.userid).count() > 0
+			followers.c.followed_id == user.username).count() > 0
 	def follow(self, user):
 		if not self.is_following(user):
 			self.followed.append(user)
 			return self
 	def userfollowers(self, user):
 		return self.followed.filter(
-			followers.c.follower_id == user.userid).count() > 0
+			followers.c.follower_id == user.username).count() > 0
 
 
 class Post(db.Model):

@@ -71,7 +71,7 @@ def signup():
 @app.route('/home')
 @login_required
 def home():
-    return 'done successfully'
+    return render_template('home.html')
 
 @app.route('/profile')
 @login_required
@@ -81,12 +81,12 @@ def profile():
     followers = []
     following = []
     for users in allusers:
-     userfollowers = current_user.userfollowers(users)
+     userfollowers = users.is_following(current_user)
      userfollowing = current_user.is_following(users)
      if userfollowers > 0:
-         followers += str(users.userid)
+         followers.append( users.username)
      if userfollowing > 0:
-         following += str(users.userid)
+         following.append( users.username)
 
 
     return render_template('profile.html',userposts = userposts,userfollowers=followers, userfollowing= following)
