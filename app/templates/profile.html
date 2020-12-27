@@ -11,7 +11,7 @@
 <div class="container">
     <div class="main-body">
     
-          <!-- Breadcrumb -->
+  
           <nav aria-label="breadcrumb" class="main-breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -19,7 +19,7 @@
               <li class="breadcrumb-item active" aria-current="page">User Profile</li>
             </ol>
           </nav>
-          <!-- /Breadcrumb -->
+  
     
           <div class="row gutters-sm">
             <div class="col-md-4 mb-3">
@@ -32,8 +32,8 @@
                       <p class="text-secondary mb-1">@{{current_user.username}}</p>
                       <p class="text-muted font-size-sm">Email: {{current_user.email}}</p>
                       <p>{{current_user.bio}}</p>
-                      <button class="btn btn-primary">Follow</button>
-                      <button class="btn btn-outline-primary">Message</button>
+                      <button class="btn btn-primary" data-toggle="modal" data-target="#followers" >Followers</button>
+                      <button class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">Following</button>
                     </div>
                   </div>
                 </div>
@@ -80,6 +80,10 @@
                   <p class="card-text">
                       {{posts.message }}
                   </p>
+                  <div class="mx-auto" >
+                    <div class="d-flex justify-content-center align-items-center rounded"  background-color: rgb(233, 236, 239);">
+                        <img src="{{url_for('static', filename='Image_UPLOADS/profiles/'+posts.postid|string+'.png')}}" class="img-fluid" alt="post">
+                    </div>
               </div>
               <div class="card-footer">
                   <a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a>
@@ -90,7 +94,7 @@
       <br>
       <br>
           {% endfor %}
-{% endblock %}
+
         </div>
     </div>
 <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
@@ -100,4 +104,48 @@
 </script>
 </body>
 </html>
-
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          ...
+          {% for following in userfollowing %}
+          {{ following }}
+          {% endfor %}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="followers" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          ...
+          {% for followers in userfollowers %}
+          {{ followers }}
+          {% endfor %}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock %}

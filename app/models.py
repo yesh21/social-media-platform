@@ -2,6 +2,11 @@ from app import db
 from flask_login import UserMixin
 from datetime import datetime
 
+followers = db.Table(
+    'followers',
+    db.Column('follower_id', db.Integer, db.ForeignKey('user.userid')),
+    db.Column('followed_id', db.Integer, db.ForeignKey('user.userid'))
+)
 
 class User(db.Model, UserMixin):
 	__tablename__ = "user"
@@ -14,8 +19,28 @@ class User(db.Model, UserMixin):
 	date = db.Column(db.DateTime, nullable=False, default= datetime.now())
 	bio = db.Column(db.Text, nullable=False, default="add bio!")
 	posts = db.relationship('Post', back_populates="userposts")
+	followed = db.relationship('User',
+                               secondary=followers,
+                               primaryjoin=(followers.c.follower_id == userid),
+                               secondaryjoin=(followers.c.followed_id == userid),
+                               backref=db.backref('followers', lazy='dynamic'),
+                               lazy='dynamic')
 	def get_id(self):
            return (self.userid)
+	def unfollow(self, user):
+		if self.is_following(user):
+			self.followed.remove(user)
+			return self
+	def is_following(self, user):
+		return self.followed.filter(
+			followers.c.followed_id == user.userid).count() > 0
+	def follow(self, user):
+		if not self.is_following(user):
+			self.followed.append(user)
+			return self
+	def userfollowers(self, user):
+		return self.followed.filter(
+			followers.c.follower_id == user.userid).count() > 0
 
 
 class Post(db.Model):

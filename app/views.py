@@ -6,6 +6,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.utils import secure_filename
 import os
+from sqlalchemy import desc
 
 
 db.create_all()
@@ -76,7 +77,19 @@ def home():
 @login_required
 def profile():
     userposts = models.Post.query.filter_by(user = current_user.userid).all()
-    return render_template('profile.html',userposts = userposts)
+    allusers = models.User.query.filter_by().all()
+    followers = []
+    following = []
+    for users in allusers:
+     userfollowers = current_user.userfollowers(users)
+     userfollowing = current_user.is_following(users)
+     if userfollowers > 0:
+         followers += str(users.userid)
+     if userfollowing > 0:
+         following += str(users.userid)
+
+
+    return render_template('profile.html',userposts = userposts,userfollowers=followers, userfollowing= following)
 
 @app.route('/newpost', methods=['GET', 'POST'])
 @login_required
@@ -87,10 +100,11 @@ def newpost():
 		post = models.Post(title=form.title.data, user=current_user.userid, message=form.message.data)
 		db.session.add(post)
 		db.session.commit()
+		userposts = models.Post.query.order_by(desc(models.Post.date)).first()
 		file = request.files['image']
 		if file and allowed_file(file.filename):
 				filename = secure_filename(file.filename)
-				file.save(os.path.join(app.config['IMAGE_UPLOADS'], str(current_user.userid)+'.png')) 
+				file.save(os.path.join(app.config['IMAGE_UPLOADS'], str(userposts.postid)+'.png')) 
 
 		flash("new post created")
 
@@ -123,3 +137,48 @@ def edit():
             return render_template("edit.html")
     else:
      return render_template("edit.html")
+
+@app.route('/unfollow/<username>')
+@login_required
+def unfollow(username):
+    user = models.User.query.filter_by(username=username).first()
+    if user is None:
+        flash('User %s not found.' % username)
+        return render_template('home.html')
+    if user == current_user:
+        flash('You can\'t unfollow yourself!')
+        return render_template('home.html')
+    u = current_user.unfollow(user)
+    if u is None:
+        flash('Cannot unfollow ' + username + '.')
+        return render_template('home.html')
+    db.session.add(u)
+    db.session.commit()
+    flash('You have stopped following ' + username + '.')
+    return render_template('home.html')
+
+@app.route('/follow/<nickname>')
+@login_required
+def follow(nickname):
+    user = models.User.query.filter_by(username=nickname).first()
+    if user is None:
+        flash('User %s not found.' % nickname)
+        return render_template('home.html')
+    if user == current_user:
+        flash('You can\'t follow yourself!')
+        return render_template('home.html')
+    u = current_user.follow(user)
+    if u is None:
+        flash('already followed ' + nickname + '.')
+        return render_template('home.html')
+    db.session.add(u)
+    db.session.commit()
+    flash('You are now following ' + nickname + '!')
+    return render_template('home.html')
+
+@app.route('/search_results/<query>')
+def search_results(query):
+    results = Post.query.whoosh_search(query, MAX_SEARCH_RESULTS).all()
+    return render_template('search_results.html',
+                           query=query,
+                           results=results)
