@@ -32,37 +32,76 @@
     <div class="row g-3">
       <div class="col">
         <label>First Name</label>
-           {{ form.firstname (class_='form-control') }}
+           {{ form.firstname (class_='form-control is-invalid' ,**{'aria-describedby':"inputGroupPrepend2 validationServerfirstnameFeedback1", 'style':"border-color: grey;"} ) }}
+           {%if form.firstname.errors%}
+           {% for errors in form.firstname.errors %}
+           <div id="validationServerfirstnameFeedback" class="invalid-feedback">
+           {{ errors }}
+            </div>
+           {% endfor %}
+            {%endif%}
       </div>
       <div class="col">
             <label>Last Name</label>
-            {{ form.lastname (class_='form-control') }}
+            {{ form.lastname (class_='form-control is-invalid' ,**{'aria-describedby':"inputGroupPrepend2 validationServerlastnameFeedback1", 'style':"border-color: grey;"} ) }}
+            {%if form.lastname.errors%}
+            {% for errors in form.lastname.errors %}
+           <div id="validationServerlastnameFeedback" class="invalid-feedback">
+           {{ errors }}
+            </div>
+           {% endfor %}
+            {%endif%}
       </div>
     </div>
     <div class="row g-3">
       <div class="col">
         <label>Email </label>
-           {{ form.email (class_='form-control') }}
+           {{ form.email (class_='form-control is-invalid' ,**{'aria-describedby':"inputGroupPrepend2 validationServeremailFeedback1", 'style':"border-color: grey;"} ) }}
+           {%if form.email.errors%}
+           {% for errors in form.email.errors %}
+           <div id="validationServeremailFeedback" class="invalid-feedback">
+           {{ errors }}
+            </div>
+           {% endfor %}
+            {%endif%}
       </div>
       <div class="col-md-4">
             <label for="validationDefaultUsername" class="form-label">Username</label>
             <div class="input-group">
             <span class="input-group-text" id="inputGroupPrepend2">@</span>
-            {{ form.username (class_='form-control is-invalid' ,**{'aria-describedby':"inputGroupPrepend2 validationServerUsernameFeedback"} ) }}
-            <div id="validationServerUsernameFeedback" class="invalid-feedback">
-              Please choose a username.
-            </div>     
+            {{ form.username (class_='form-control is-invalid' ,**{'aria-describedby':"inputGroupPrepend2 validationServerUsernameFeedback", 'style':"border-color: grey;"} ) }}
+            {%if form.username.errors%}
+            {% for errors in form.username.errors %}
+           <div id="validationServerUsernameFeedback" class="invalid-feedback">
+           {{ errors }}
+            </div>
+           {% endfor %}
+            {%endif%}   
             </div>
       </div>
     </div>
     <div class="row g-3">
       <div class="col">
         <label>Password</label>
-           {{ form.password (class_='form-control') }}
+           {{ form.password (class_='form-control is-invalid' ,**{'aria-describedby':"inputGroupPrepend2 validationServerPasswordFeedback1", 'style':"border-color: grey;"} ) }}
+           {%if form.password.errors%}
+           {% for errors in form.password.errors %}
+           <div id="validationServerPasswordFeedback" class="invalid-feedback">
+           {{ errors }}
+            </div>
+           {% endfor %}
+            {%endif%}
       </div>
       <div class="col">
             <label>Re-Password:</label>
-            {{ form.confirmPassword (class_='form-control') }}
+            {{ form.confirmPassword (class_='form-control is-invalid' ,**{'aria-describedby':"inputGroupPrepend2 validationServerconfirmPasswordFeedback1", 'style':"border-color: grey;"} ) }}
+            {%if form.confirmPassword.errors%}
+           {% for errors in form.confirmPassword.errors %}
+           <div id="validationServerconfirmPasswordFeedback" class="invalid-feedback">
+           {{ errors }}
+            </div>
+           {% endfor %}
+            {%endif%}
       </div>
     </div>
       <br>

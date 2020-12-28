@@ -7,11 +7,9 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 from werkzeug.utils import secure_filename
 import os
 from sqlalchemy import desc
+from datetime import datetime
 
 
-db.create_all()
-app.config['SECRET_KEY'] = 'Thisissupposedtobesecret!'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 app.config["IMAGE_UPLOADS"] = "app/static/Image_UPLOADS/uploads/"
 app.config["IMAGE_UPLOADS1"] = "app/static/Image_UPLOADS/profiles/"
 login_manager = LoginManager()
@@ -24,6 +22,12 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+severityList = ['TEST', 'WARNING', 'UPDATE', 'SEVERE']
+def appLog( severe, log ):
+	file = open("log.txt", "a")
+	file.write("{1} -- {0} | {2}\n".format(severityList[severe], datetime.now().strftime("%Y-%m-%d %H:%M"), log))
+	file.close()
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -44,8 +48,10 @@ def login():
             if check_password_hash(user.password, form.password.data):
                 session['email'] = user.email
                 login_user(user, remember=form.remember.data)
+                appLog(1, "{0} has logged".format(user.email))
                 return redirect(url_for('home'))
             else:
+                appLog(3, "{0} tried loggin' w/ incorrect password".format(user.email))
                 flash("incorrect password")
 
         #return '<h1>' + form.username.data + ' ' + form.password.data + '</h1>'
@@ -155,6 +161,7 @@ def unfollow(username):
     db.session.add(u)
     db.session.commit()
     flash('You have stopped following ' + username + '.')
+    appLog(2, "{0} has unfollowed ".format(current_user.email)+user.username )
     return render_template('home.html')
 
 @app.route('/follow/<nickname>')
@@ -178,7 +185,7 @@ def follow(nickname):
 
 @app.route('/search_results/<query>')
 def search_results(query):
-    results = Post.query.whoosh_search(query, MAX_SEARCH_RESULTS).all()
+    results = models.User.query.whoosh_search(username = query).all()
     return render_template('search_results.html',
                            query=query,
                            results=results)

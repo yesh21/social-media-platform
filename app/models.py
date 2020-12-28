@@ -43,6 +43,7 @@ class User(db.Model, UserMixin):
 			followers.c.follower_id == user.username).count() > 0
 
 
+
 class Post(db.Model):
 	__tablename__ = "post"
 	postid = db.Column(db.Integer, primary_key=True, autoincrement=True)

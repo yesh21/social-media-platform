@@ -28,7 +28,7 @@
               <div class="card">
                 <div class="card-body">
                   <div class="d-flex flex-column align-items-center text-center">
-                    <img src="{{url_for('static', filename='Image_UPLOADS/profiles/'+current_user.userid|string+'.png')}}" alt="Admin" class="rounded-circle" width="150" height="150">
+                    <img src="{{url_for('static', filename='Image_UPLOADS/profiles/'+current_user.userid|string+'.png')}}" alt="Admin" class="rounded-circle" width="150" height="150" >
                     <div class="mt-3">
                       <h4>{{current_user.firstname}} {{current_user.lastname}}</h4>
                       <p class="text-secondary mb-1">@{{current_user.username}}</p>
@@ -82,8 +82,8 @@
                       {{posts.message }}
                   </p>
                   <div class="mx-auto" >
-                    <div class="d-flex justify-content-center align-items-center rounded"  background-color: rgb(233, 236, 239);">
-                        <img src="{{url_for('static', filename='Image_UPLOADS/profiles/'+posts.postid|string+'.png')}}" class="img-fluid" alt="post">
+                    <div class="d-flex justify-content-center align-items-center rounded"  background-color: rgb(233, 236, 239);>
+                        <img src="{{url_for('static', filename='Image_UPLOADS/profiles/'+posts.postid|string+'.png')}}" class="img-fluid" alt="post" onerror="this.style.display='none';">
                     </div>
               </div>
               <div class="card-footer">
