@@ -4,12 +4,6 @@
 
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
 
-  {% if title %}
-      <title>{{ title }}</title>
-      {% else %}
-      <title> No title specified</title>
-      {% endif %}
-
       <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
 
   </head>
@@ -19,18 +13,33 @@
       <a class="item" href="#"><b><h2>Yesh</h2></b></a>
       <!-- Search form -->
       <div class="form-inline d-flex justify-content-center md-form" style="width:100%"> 
-        <input type="text" class="form-control" style="width:90%" placeholder="search username">
+        <form action="/search" method="POST" style="width:100%">
+        <input type="text" class="form-control" style="width:90%" placeholder="search username" name="search">
+      </form>
       </div>
     </div>
 
     <div class="ui five item menu" style="margin-top: 0px;">
       <a class="item" href="{{ url_for('home') }}">Home</a>
       <a class="item" href="{{ url_for('newpost') }}">New Post</a>
+      <a class="item" href="{{ url_for('edit') }}">Edit Profile</a>
       <a class="item" href="{{ url_for('profile') }}">Profile</a>
-      <a class="item" href="{{ url_for('edit') }}">Edit</a>
       <a class="item" href="{{ url_for('logout') }}">Logout</a>
     </div>
-
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        
+          {% for message in messages %}
+          <div style="display: flex;justify-content: center;margin-top: 10px;">
+          <div class="alert alert-danger" role="alert" style = "width:95%" >
+            <p class="text-center" style="color: red; justify-content: center;margin-bottom: 0;">{{ message }} </p>
+          </div>
+          </div>
+          {% endfor %}
+        
+    {% endif %}
+  {% endwith %}
     <div>
       {% block content %}{% endblock %}
     </div>

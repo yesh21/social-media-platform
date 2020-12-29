@@ -41,3 +41,6 @@ class PostForm(Form):
     title = StringField('title', validators=[DataRequired()],render_kw={"placeholder": "Title"})
     message = TextAreaField('message', validators=[DataRequired()],render_kw={"placeholder": "what are you thinking?"})
     submitpost = SubmitField('Post')
+
+class SearchForm(Form):
+    search = StringField('search', validators=[DataRequired()])

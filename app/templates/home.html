@@ -1,16 +1,6 @@
 {% extends "main.html" %}
 {% block content %}
-{% with messages = get_flashed_messages() %}
-      {% if messages %}
-          
-            {% for message in messages %}
-            <div style="display: flex;justify-content: center;margin-top: 10px;">
-            <div class="alert alert-danger" role="alert" style = "width:95%" >
-              <p class="text-center" style="color: red; justify-content: center;margin-bottom: 0;">{{ message }} </p>
-            </div>
-            </div>
-            {% endfor %}
-          
-      {% endif %}
-    {% endwith %}
+<head>
+  <title>Home Page</title>
+</head>
     {% endblock %}

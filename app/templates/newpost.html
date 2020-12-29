@@ -1,7 +1,9 @@
 {% extends "main.html" %}
 {% block content %}
-
-<div class="ui main text container">
+<head>
+    <title>New Post</title>
+</head>
+<div class="container h-100">
 
   <h1 class="ui header">New Post:</h1>
 
@@ -24,7 +26,7 @@
       <div class="d-flex justify-content-between align-items-center">
           <div class="d-flex justify-content-between align-items-center">
               <div class="mr-2">
-                <img src="{{url_for('static', filename='Image_UPLOADS/profiles/'+current_user.userid|string+'.png')}}" alt="Admin" class="rounded-circle" width="45" height="45">
+                <img src="{{url_for('static', filename='Image_UPLOADS/profiles/'+current_user.userid|string+'.png')}}" alt="Admin" class="rounded-circle" width="45" height="45" altSrc="{{url_for('static', filename='default.jpg')}}" onerror="this.src = $(this).attr('altSrc')">
               </div>
               <div class="ml-2">
                   <div class="h5 m-0">@{{current_user.username}}</div>

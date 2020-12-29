@@ -1,3 +1,5 @@
+{% extends "main.html" %}
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +11,6 @@
     <link href="http://netdna.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
     <style type="text/css">
     	body{
-    margin-top:20px;
     background:#f8f8f8
 }
     </style>
@@ -29,7 +30,7 @@
                 <div class="col-12 col-sm-auto mb-3">
                   <div class="mx-auto" style="width: 140px;">
                     <div class="d-flex justify-content-center align-items-center rounded" style="height: 140px; background-color: rgb(233, 236, 239);">
-                        <img src="{{url_for('static', filename='Image_UPLOADS/profiles/'+current_user.userid|string+'.png')}}" class="img-fluid" alt="image">
+                        <img src="{{url_for('static', filename='Image_UPLOADS/profiles/'+current_user.userid|string+'.png')}}" class="img-fluid" alt="image" altSrc="{{url_for('static', filename='default.jpg')}}" onerror="this.src = $(this).attr('altSrc')">
                     </div>
                   </div>
                 </div>
@@ -170,3 +171,5 @@
 </script>
 </body>
 </html>
+
+{% endblock %}

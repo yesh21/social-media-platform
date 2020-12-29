@@ -137,7 +137,7 @@ def edit():
         if file and allowed_file(file.filename):
                 filename = secure_filename(file.filename)
                 file.save(os.path.join(app.config['IMAGE_UPLOADS1'], str(current_user.userid)+'.png')) 
-                flash("new image uploaded")
+                flash("new profile image uploaded")
                 return render_template("home.html")
         else:
             return render_template("edit.html")
@@ -183,9 +183,17 @@ def follow(nickname):
     flash('You are now following ' + nickname + '!')
     return render_template('home.html')
 
+@app.route('/search', methods=['POST'])
+def search():
+    search = request.form.get("search")
+    return redirect(url_for('search_results', query=search))
+
 @app.route('/search_results/<query>')
 def search_results(query):
-    results = models.User.query.whoosh_search(username = query).all()
+    results1 = models.User.query.filter_by(username = query).all()
+    results2 = models.User.query.filter_by(firstname = query).all()
+    results3 = models.User.query.filter_by(lastname = query).all()
+    results = results1 + results2 + results3
     return render_template('search_results.html',
                            query=query,
                            results=results)
