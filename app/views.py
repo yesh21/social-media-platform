@@ -77,7 +77,16 @@ def signup():
 @app.route('/home')
 @login_required
 def home():
-    return render_template('home.html')
+    userposts = [] 
+    message = ""
+    allusers = models.User.query.filter_by().all()
+    for users in allusers:
+        userfollowing = current_user.is_following(users)
+        if userfollowing > 0:
+            userposts += models.Post.query.filter_by(user = users.userid).all()
+    if len(userposts) == 0:
+        message += "U haven't followed anyone or none of ur following users posted"
+    return render_template('home.html', userposts = userposts, message = message)
 
 @app.route('/profile')
 @login_required
@@ -86,6 +95,7 @@ def profile():
     allusers = models.User.query.filter_by().all()
     followers = []
     following = []
+    message = ""
     for users in allusers:
      userfollowers = users.is_following(current_user)
      userfollowing = current_user.is_following(users)
@@ -93,9 +103,9 @@ def profile():
          followers.append( users.username)
      if userfollowing > 0:
          following.append( users.username)
-
-
-    return render_template('profile.html',userposts = userposts,userfollowers=followers, userfollowing= following)
+    if len(userposts) == 0:
+        message += "No posts Uploaded"
+    return render_template('profile.html',userposts = userposts,userfollowers=followers, userfollowing= following, message=message)
 
 @app.route('/newpost', methods=['GET', 'POST'])
 @login_required

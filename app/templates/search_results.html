@@ -16,7 +16,7 @@
               <p class="text-secondary mb-1">@{{user.username}}</p>
               <p class="text-muted font-size-sm">Email: {{user.email}}</p>
               <p>{{user.bio}}</p>
-              <button class="btn btn-primary" data-toggle="modal" data-target="#followers" >Followers</button>
+              <button class="btn btn-primary" onclick="window.location.href='/follow/{{user.username}}'"  >Follow</button>
               <button class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">Following</button>
             </div>
           </div>

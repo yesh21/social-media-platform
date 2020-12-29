@@ -10,12 +10,12 @@ followers = db.Table(
 
 class User(db.Model, UserMixin):
 	__tablename__ = "user"
-	userid = db.Column(db.Integer, primary_key=True, autoincrement=True)
-	email = db.Column(db.String(500), nullable=False)
-	firstname = db.Column(db.String(500), nullable=False)
-	lastname = db.Column(db.String(500), nullable=False)
-	username = db.Column(db.String(500), nullable=False)
-	password = db.Column(db.String(500), nullable=False)
+	userid = db.Column(db.Integer, unique=True, primary_key=True, autoincrement=True)
+	email = db.Column(db.String(70), unique=True, nullable=False)
+	firstname = db.Column(db.String(20), nullable=False)
+	lastname = db.Column(db.String(20), nullable=False)
+	username = db.Column(db.String(20), unique=True, nullable=False)
+	password = db.Column(db.String(20), nullable=False)
 	date = db.Column(db.DateTime, nullable=False, default= datetime.now())
 	bio = db.Column(db.Text, nullable=False, default="add bio!")
 	posts = db.relationship('Post', back_populates="userposts")

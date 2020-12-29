@@ -13,8 +13,8 @@ class LoginForm(Form):
 class SignupForm(Form):
     firstname = StringField('firstname', validators=[DataRequired(), Length(min=3, max=20)],render_kw={"placeholder": "First Name"})
     lastname = StringField('lastname', validators=[DataRequired(), Length(min=3, max=20)],render_kw={"placeholder": "Last Name"})
-    username = StringField('username', validators=[DataRequired()],render_kw={"placeholder": "username"})
-    email = StringField('Email', validators=[DataRequired(), Email(message='Invalid email')], render_kw={"placeholder": "Email"})
+    username = StringField('username', validators=[DataRequired(), Length(min=3, max=20)],render_kw={"placeholder": "username"})
+    email = StringField('Email', validators=[DataRequired(), Email(message='Invalid email'), Length(min=3, max=70)], render_kw={"placeholder": "Email"})
     password = PasswordField('Password', [
     validators.DataRequired(), Length(min=3, max=20),
     validators.EqualTo('confirmPassword', message='Passwords must match')],
