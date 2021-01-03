@@ -116,7 +116,7 @@ def newpost():
 		post = models.Post(title=form.title.data, user=current_user.userid, message=form.message.data)
 		db.session.add(post)
 		db.session.commit()
-		userposts = models.Post.query.order_by(desc(models.Post.date)).first()
+		userposts = models.Post.query.order_by(models.Post.postid.desc()).first()
 		file = request.files['image']
 		if file and allowed_file(file.filename):
 				filename = secure_filename(file.filename)

@@ -1,12 +1,26 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <!--  This file has been downloaded from bootdey.com    @bootdey on twitter -->
+    <!--  All snippets are MIT license http://bootdey.com/license -->
+    <title>Sign Up</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand " style="display: flex;">
+      <img src="{{url_for('static', filename='logo.jpg')}}" alt="LOGO" class="rounded-circle" width="45" height="45">
+      <h1>Bluebox</h1>
+    </a>
+  </nav>
 <div class="container h-100">
   <div class="justify-content-center align-items-center" style="position: relative; top: 10%; font-weight: 600;">
     <div class="card" style="width: 100%">
       <h4 class="card-header">Sign Up</h4>
-<link rel="stylesheet" href="{{url_for('.static', filename='signin.css')}}">
 
 {% with messages = get_flashed_messages() %}
   {% if messages %}
@@ -124,4 +138,6 @@
 </form>
 
 </div> <!-- /container -->
+</body>
+</html>
 {% endblock %}

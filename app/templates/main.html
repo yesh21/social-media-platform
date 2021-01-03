@@ -8,23 +8,24 @@
 
   </head>
   <body>
-
-    <div class="ui two item menu" style="margin-bottom: 0px; margin-top: 0px;">
-      <a class="item" href="#" style="width: 40%;"><b><h2>YeshBook</h2></b></a>
-      <!-- Search form -->
-      <div class="form-inline d-flex justify-content-center md-form" style="width:100%"> 
-        <form action="/search" method="POST" style="width:100%">
-        <input type="text" class="form-control" style="width:90%" placeholder="search Username/Name" name="search">
+    <nav class="navbar navbar-light bg-light">
+      <a class="navbar-brand " style="display: flex;">
+        <img src="{{url_for('static', filename='logo.jpg')}}" alt="LOGO" class="rounded-circle" width="45" height="45">
+        <h1>Bluebox</h1>
+      </a>
+      <form class="form-inline col-xl-5 col-lg-6 col-md-8 mx-auto text-center form" action="/search" method="POST" style="flex-flow: unset; width: 100%;margin-right: 0%;">
+        <input class="form-control " type="search" placeholder="search Username/Name" aria-label="Search" name="search" style="width: 100%;" required>
+        <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
       </form>
-      </div>
-    </div>
+    </nav>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <div class="ui five item menu" style="margin-top: 0px;">
-      <a class="item" href="{{ url_for('home') }}">Home</a>
-      <a class="item" href="{{ url_for('newpost') }}">New Post</a>
-      <a class="item" href="{{ url_for('edit') }}">Edit Profile</a>
-      <a class="item" href="{{ url_for('profile') }}">Profile</a>
-      <a class="item" href="{{ url_for('logout') }}">Logout</a>
+      <a class="item" href="{{ url_for('home') }}"><i class="fa fa-home"></i>Home</a>
+      <a class="item" href="{{ url_for('newpost') }}"><i class="fa fa-address-card"></i>New Post</a>
+      <a class="item" href="{{ url_for('edit') }}"><i class="fa fa-address-book"></i>Edit Profile</a>
+      <a class="item" href="{{ url_for('profile') }}"><i class="fa fa-user-circle"></i>Profile</a>
+      <a class="item" href="{{ url_for('logout') }}"><i class="fa fa-sign-out"></i>Logout</a>
     </div>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     {% with messages = get_flashed_messages() %}

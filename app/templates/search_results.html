@@ -2,6 +2,16 @@
 {% extends "main.html" %}
 
 {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <!--  This file has been downloaded from bootdey.com    @bootdey on twitter -->
+    <!--  All snippets are MIT license http://bootdey.com/license -->
+    <title>Search Results- {{query}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
 <h1>Search results for "{{query}}":</h1>
 <title>Search Results</title>
 {% for user in results %}
@@ -25,5 +35,7 @@
     </div>
     <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</body>
+</html>
 {% endfor %}
 {% endblock %}

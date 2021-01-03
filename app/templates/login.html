@@ -1,10 +1,25 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-
-<div class="container h-100">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <!--  This file has been downloaded from bootdey.com    @bootdey on twitter -->
+    <!--  All snippets are MIT license http://bootdey.com/license -->
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand " style="display: flex;">
+      <img src="{{url_for('static', filename='logo.jpg')}}" alt="LOGO" class="rounded-circle" width="45" height="45">
+      <h1>Bluebox</h1>
+    </a>
+  </nav>
+<div class="container h-100" style="width: 80%">
   <div class="justify-content-center align-items-center" style="position: relative; top: 10%; font-weight: 600;">
-    <div class="card" style="width: 80%">
+    <div class="card" style="width: 100%">
       <h4 class="card-header">Login</h4>
 
       
@@ -43,7 +58,7 @@
         <br>
         <div class ="justify-content-center align-items-center">
           {{ form.remember  }}
-          <label class="col-sm-6">remember me!</label>
+          <label >remember me!</label>
           </div>
         <br>
         <div style="display: flex;justify-content: center;">
@@ -75,5 +90,6 @@ window.cookieconsent.initialise({
   "position": "bottom-right"
 });
 </script>
-
+</body>
+</html>
 {% endblock %}
