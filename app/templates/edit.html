@@ -1,182 +1,177 @@
-{% extends "main.html" %}
-{% block content %}
+{% extends "main.html" %} {% block content %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <!--  This file has been downloaded from bootdey.com    @bootdey on twitter -->
     <!--  All snippets are MIT license http://bootdey.com/license -->
     <title>Edit Profile</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-          crossorigin="anonymous"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-          crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-          crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <style type="text/css">
-    	body{
-    background:#f8f8f8
-}
+        body {
+            background: #f8f8f8
+        }
     </style>
 </head>
-<body>
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-<div class="container">
-<div class="row flex-lg-nowrap">
-  <div class="col">
-    <div class="row">
-      <div class="col mb-3">
-        <div class="card">
-            <form action="" method="POST" enctype=multipart/form-data>
-          <div class="card-body">
-            <div class="e-profile">
-              <div class="row">
-                <div class="col-12 col-sm-auto mb-3">
-                  <div class="mx-auto" style="width: 140px;">
-                    <div class="d-flex justify-content-center align-items-center rounded" style="height: 140px; background-color: rgb(233, 236, 239);">
-                        <img src="{{url_for('static', filename='Image_UPLOADS/profiles/'+current_user.userid|string+'.png')}}" class="img-fluid" alt="image" altSrc="{{url_for('static', filename='default.jpg')}}" onerror="this.src = $(this).attr('altSrc')">
-                    </div>
-                  </div>
-                </div>
-                <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
-                  <div class="text-center text-sm-left mb-2 mb-sm-0">
-                    <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">{{current_user.firstname}} {{current_user.lastname}}</h4>
-                    <p class="mb-0">@{{current_user.username}}</p>
-                
-                        <div class="custom-file" >
-                            <input type="file" name="image" class="custom-file-input" id="image">
-                            <label class="custom-file-label" for="customFileLangHTML" data-browse="Upload"></label>
-                          </div>
-                  </div>
 
-                  <div class="text-center text-sm-right">
-                    <span class="badge badge-secondary">administrator</span>
-                    <div class="text-muted"><small>Joined on {{current_user.date.strftime('%Y-%m-%d')}}</small></div>
-                  </div>
+<body>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <div class="container">
+        <div class="row flex-lg-nowrap">
+            <div class="col">
+                <div class="row">
+                    <div class="col mb-3">
+                        <div class="card">
+                            <form action="" method="POST" enctype=multipart/form-data>
+                                <div class="card-body">
+                                    <div class="e-profile">
+                                        <div class="row">
+                                            <div class="col-12 col-sm-auto mb-3">
+                                                <div class="mx-auto" style="width: 140px;">
+                                                    <div class="d-flex justify-content-center align-items-center rounded" style="height: 140px; background-color: rgb(233, 236, 239);">
+                                                        <img src="{{url_for('static', filename='Image_UPLOADS/profiles/'+current_user.userid|string+'.png')}}" class="img-fluid" alt="image" altSrc="{{url_for('static', filename='default.jpg')}}" onerror="this.src = $(this).attr('altSrc')">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
+                                                <div class="text-center text-sm-left mb-2 mb-sm-0">
+                                                    <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">{{current_user.firstname}} {{current_user.lastname}}</h4>
+                                                    <p class="mb-0">@{{current_user.username}}</p>
+
+                                                    <div class="custom-file">
+                                                        <input type="file" name="image" class="custom-file-input" id="image">
+                                                        <label class="custom-file-label" for="customFileLangHTML" data-browse="Upload"></label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="text-center text-sm-right">
+                                                    <span class="badge badge-secondary">administrator</span>
+                                                    <div class="text-muted"><small>Joined on {{current_user.date.strftime('%Y-%m-%d')}}</small></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <ul class="nav nav-tabs">
+                                            <li class="nav-item"><a href="" class="active nav-link">Profile Edit</a></li>
+                                        </ul>
+                                        <div class="tab-content pt-3">
+                                            <div class="tab-pane active">
+                                                <form class="form" novalidate="">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <div class="form-group">
+                                                                        <label>First Name</label>
+                                                                        <input class="form-control" type="text" name="name" placeholder={{current_user.firstname}} value={{current_user.firstname}} disabled>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <div class="form-group">
+                                                                        <label>Last name</label>
+                                                                        <input class="form-control" type="text" name="username" placeholder={{current_user.lastname}} value={{current_user.lastname}} disabled>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <div class="form-group">
+                                                                        <label>Email</label>
+                                                                        <input class="form-control" type="text" placeholder={{current_user.email}} value={{current_user.email}} disabled>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label>Username</label>
+                                                                        <input class="form-control" type="text" name="username" placeholder={{current_user.username}} value={{current_user.username}} disabled>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col mb-3">
+                                                                    <div class="form-group">
+                                                                        <label>About</label>
+                                                                        <textarea class="form-control" rows="5" placeholder={{current_user.bio}} value={{current_user.bio}}></textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-12 col-sm-6 mb-3">
+                                                            <div class="mb-2"><b>Change Password</b></div>
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <div class="form-group">
+                                                                        <label>Current Password</label> {{ form.oldpassword (class_='form-control') }}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <div class="form-group">
+                                                                        <label>New Password</label> {{ form.newpassword (class_='form-control') }}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <div class="form-group">
+                                                                        <label>Confirm Password</label> {{ form.newconfirmPassword (class_='form-control') }}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col d-flex justify-content-end">
+                                                <input class="btn btn-primary" type="submit" value="Save Changes">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <ul class="nav nav-tabs">
-                <li class="nav-item"><a href="" class="active nav-link">Profile Edit</a></li>
-              </ul>
-              <div class="tab-content pt-3">
-                <div class="tab-pane active">
-                  <form class="form" novalidate="">
-                    <div class="row">
-                      <div class="col">
-                        <div class="row">
-                          <div class="col">
-                            <div class="form-group">
-                              <label>First Name</label>
-                              <input class="form-control" type="text" name="name" placeholder={{current_user.firstname}} value={{current_user.firstname}}>
-                            </div>
-                          </div>
-                          <div class="col">
-                            <div class="form-group">
-                              <label>Last name</label>
-                              <input class="form-control" type="text" name="username" placeholder={{current_user.lastname}} value={{current_user.lastname}}>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col">
-                            <div class="form-group">
-                              <label>Email</label>
-                              <input class="form-control" type="text" placeholder={{current_user.email}} value={{current_user.email}}>
-                            </div>
-                          </div>
-                          <div class="col-md-4">
-                            <div class="form-group">
-                              <label>Username</label>
-                              <input class="form-control" type="text" name="username" placeholder={{current_user.username}} value={{current_user.username}}>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col mb-3">
-                            <div class="form-group">
-                              <label>About</label>
-                              <textarea class="form-control" rows="5" placeholder={{current_user.bio}} value={{current_user.bio}}></textarea>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-12 col-sm-6 mb-3">
-                        <div class="mb-2"><b>Change Password</b></div>
-                        <div class="row">
-                          <div class="col">
-                            <div class="form-group">
-                              <label>Current Password</label>
-                              <input class="form-control" type="password" placeholder="••••••">
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col">
-                            <div class="form-group">
-                              <label>New Password</label>
-                              <input class="form-control" type="password" placeholder="••••••">
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col">
-                            <div class="form-group">
-                              <label>Confirm <span class="d-none d-xl-inline">Password</span></label>
-                              <input class="form-control" type="password" placeholder="••••••"></div>
-                          </div>
-                        </div>
-                      </div>
-                      
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col d-flex justify-content-end">
-                        <input class="btn btn-primary" type="submit" value="Save Changes">
-                      </div>
-                    </div>
-                </div>
-              </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </form>
-      <div class="col-12 col-md-3 mb-3">
-        <div class="card mb-3">
-          <div class="card-body">
-            <div class="px-xl-3">
-              <button onclick="window.location.href='/logout'" class="btn btn-block btn-secondary">
+            </form>
+            <div class="col-12 col-md-3 mb-3">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="px-xl-3">
+                            <button onclick="window.location.href='/logout'" class="btn btn-block btn-secondary">
                 <i class="fa fa-sign-out"></i>
                 <span>Logout</span>
               </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="card-title font-weight-bold">Support</h6>
+                        <p class="card-text">Get fast, free help from our friendly assistants.</p>
+                        <button type="button" class="btn btn-primary" onclick="window.location.href='mailto:yaswanthp21@example.com'">Contact Us</button>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-        <div class="card">
-          <div class="card-body">
-            <h6 class="card-title font-weight-bold">Support</h6>
-            <p class="card-text">Get fast, free help from our friendly assistants.</p>
-            <button type="button" class="btn btn-primary">Contact Us</button>
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
-</div>
-</div>
+    </div>
+    </div>
 
-<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-<script src="http://netdna.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script type="text/javascript">
-	
-</script>
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+    </script>
 </body>
+
 </html>
 
 {% endblock %}

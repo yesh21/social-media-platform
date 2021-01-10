@@ -1,12 +1,12 @@
 from flask import render_template, flash, redirect, url_for, session, request, make_response, jsonify
 from app import app
-from .forms import LoginForm, SignupForm,PostForm
+from .forms import LoginForm, SignupForm,PostForm , PasswordForm
 from app import db, models
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.utils import secure_filename
 import os
-from sqlalchemy import desc
+from sqlalchemy import desc, func
 from datetime import datetime
 
 
@@ -43,7 +43,7 @@ def login():
     form = LoginForm()
 
     if form.validate_on_submit():
-        user = models.User.query.filter_by(email=form.email.data).first()
+        user = db.session.query(models.User).filter(models.User.email.ilike(form.email.data)).first()
         if user:
             if check_password_hash(user.password, form.password.data):
                 session['email'] = user.email
@@ -77,35 +77,38 @@ def signup():
 @app.route('/home')
 @login_required
 def home():
-    userposts = [] 
+    userposts = {} 
     message = ""
     allusers = models.User.query.filter_by().all()
     for users in allusers:
         userfollowing = current_user.is_following(users)
         if userfollowing > 0:
-            userposts += models.Post.query.filter_by(user = users.userid).all()
+            followerposts = models.Post.query.filter_by(user = users.userid).all()
+            for followposts in followerposts:
+                userposts[followposts] = users 
     if len(userposts) == 0:
         message += "U haven't followed anyone or none of ur following users posted"
     return render_template('home.html', userposts = userposts, message = message)
 
-@app.route('/profile')
+@app.route('/profile/<userprofile>')
 @login_required
-def profile():
-    userposts = models.Post.query.filter_by(user = current_user.userid).all()
+def profile(userprofile):
+    Profileuser = models.User.query.filter_by(username = userprofile).first()
+    userposts = models.Post.query.filter_by(user = Profileuser.userid).all()
     allusers = models.User.query.filter_by().all()
     followers = []
     following = []
     message = ""
     for users in allusers:
-     userfollowers = users.is_following(current_user)
-     userfollowing = current_user.is_following(users)
+     userfollowers = users.is_following(Profileuser)
+     userfollowing = Profileuser.is_following(users)
      if userfollowers > 0:
-         followers.append( users.username)
+         followers.append( users)
      if userfollowing > 0:
-         following.append( users.username)
+         following.append( users)
     if len(userposts) == 0:
         message += "No posts Uploaded"
-    return render_template('profile.html',userposts = userposts,userfollowers=followers, userfollowing= following, message=message)
+    return render_template('profile.html',userposts = userposts,userfollowers=followers, userfollowing= following, message=message, user = Profileuser)
 
 @app.route('/newpost', methods=['GET', 'POST'])
 @login_required
@@ -140,19 +143,27 @@ def logout():
 @app.route('/edit',methods=['GET','POST'])
 @login_required
 def edit():
+    form = PasswordForm()
     if request.method == "POST":
         files = request.files['image']
         image = files.filename
         file = request.files['image']
+        if (check_password_hash(current_user.password, form.oldpassword.data)):
+            hashed_password = generate_password_hash(form.newpassword.data, method='sha256')
+            updatePass = models.User.query.filter_by(userid=current_user.userid).update(dict(password=hashed_password))
+            flash("password has changed successfully")
+            db.session.commit()
+        else:
+            flash("typed incorrect password")
         if file and allowed_file(file.filename):
                 filename = secure_filename(file.filename)
                 file.save(os.path.join(app.config['IMAGE_UPLOADS1'], str(current_user.userid)+'.png')) 
                 flash("new profile image uploaded")
                 return render_template("home.html")
         else:
-            return render_template("edit.html")
+            return render_template("edit.html" , form=form)
     else:
-     return render_template("edit.html")
+     return render_template("edit.html" , form=form)
 
 @app.route('/unfollow/<username>')
 @login_required
@@ -172,7 +183,7 @@ def unfollow(username):
     db.session.commit()
     flash('You have stopped following ' + username + '.')
     appLog(2, "{0} has unfollowed ".format(current_user.email)+user.username )
-    return render_template('home.html')
+    return redirect(request.referrer)
 
 @app.route('/follow/<nickname>')
 @login_required
@@ -191,7 +202,7 @@ def follow(nickname):
     db.session.add(u)
     db.session.commit()
     flash('You are now following ' + nickname + '!')
-    return render_template('home.html')
+    return redirect(request.referrer)
 
 @app.route('/search', methods=['POST'])
 def search():
@@ -200,10 +211,14 @@ def search():
 
 @app.route('/search_results/<query>')
 def search_results(query):
-    results1 = models.User.query.filter_by(username = query).all()
-    results2 = models.User.query.filter_by(firstname = query).all()
-    results3 = models.User.query.filter_by(lastname = query).all()
+    message = ""
+    results1 = db.session.query(models.User).filter(models.User.username.ilike(query)).all()
+    results2 = db.session.query(models.User).filter(models.User.firstname.ilike(query)).all()
+    results3 = db.session.query(models.User).filter(models.User.lastname.ilike(query)).all()
     results = results1 + results2 + results3
+    results = set(results)
+    if len(results) == 0:
+        message += "No results found"
     return render_template('search_results.html',
                            query=query,
-                           results=results)
+                           results=results, message=message)

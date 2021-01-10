@@ -24,7 +24,7 @@ class SignupForm(Form):
     Signupbtn = SubmitField('Signup')
     def validate_username(self, username):
         excluded_chars = " *?!'^+%&/()=}][{$#"
-        userdata = models.User.query.filter_by(username=self.username.data).first()
+        userdata = db.session.query(models.User).filter(models.User.username.ilike(self.username.data)).first()
         if userdata:
             raise ValidationError(f" Username '{userdata.username}'   already exists")
         for char in self.username.data:
@@ -33,7 +33,7 @@ class SignupForm(Form):
                     f"Character {char} is not allowed in username.")
 
     def validate_email(self, email):
-        userdata = models.User.query.filter_by(email=self.email.data).first()
+        userdata = db.session.query(models.User).filter(models.User.email.ilike(self.email.data)).first()
         if userdata:
                 raise ValidationError(f"Email '{userdata.email}' already exists")
 
@@ -44,3 +44,11 @@ class PostForm(Form):
 
 class SearchForm(Form):
     search = StringField('search', validators=[DataRequired()])
+
+class PasswordForm(Form):
+    oldpassword = PasswordField('Password', validators=[DataRequired()], render_kw={"placeholder": "Old Password"})
+    newpassword = PasswordField('Password', [
+    validators.DataRequired(), Length(min=3, max=20),
+    validators.EqualTo('newconfirmPassword', message='Passwords must match')],
+    render_kw={"placeholder": "New Password"})
+    newconfirmPassword = PasswordField('newConfirmPassword', validators=[DataRequired()],render_kw={"placeholder": "Confirm Password"})

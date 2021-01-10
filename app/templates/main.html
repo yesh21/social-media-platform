@@ -1,48 +1,66 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
 
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
 
-      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+    <style>
+        .bluebox {
+            position: relative;
+            top: 0%;
+            right: 0%;
+            text-transform: uppercase;
+            font-family: verdana;
+            font-size: 1.4em;
+            font-weight: 700;
+            color: cornflowerblue;
+            text-shadow: 1px 1px 1px mediumblue, 1px 2px 1px blue, 1px 3px 1px #919191, 1px 4px 1px skyblue, 1px 5px 1px darkblue, 1px 6px 1px #919191, 1px 7px 1px #919191, 1px 5px 2px rgba(16, 16, 16, 0.4), 1px 10px 4px rgba(16, 16, 16, 0.2)
+        }
+        
+        @media (min-width: 695px) {
+            #collapseData {
+                display: block;
+                width: 410px;
+            }
+        }
+    </style>
 
-  </head>
-  <body>
+</head>
+
+<body>
     <nav class="navbar navbar-light bg-light">
-      <a class="navbar-brand " style="display: flex;">
-        <img src="{{url_for('static', filename='logo.jpg')}}" alt="LOGO" class="rounded-circle" width="45" height="45">
-        <h1>Bluebox</h1>
-      </a>
-      <form class="form-inline col-xl-5 col-lg-6 col-md-8 mx-auto text-center form" action="/search" method="POST" style="flex-flow: unset; width: 100%;margin-right: 0%;">
-        <input class="form-control " type="search" placeholder="search Username/Name" aria-label="Search" name="search" style="width: 100%;" required>
-        <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
-      </form>
+        <a class="navbar-brand " style="display: flex;">
+            <img src="{{url_for('static', filename='logo.jpg')}}" alt="LOGO" class="rounded-circle" width="45" height="45">
+            <span class="bluebox">Bluebox</span>
+        </a>
+        <form class="form-inline  text-center form" action="/search" method="POST" style="flex-flow: unset;margin-right: 0%;">
+            <div class="collapse" id="collapseData">
+                <input class="form-control " type="search" placeholder="search Username/Name" aria-label="Search" name="search" style="width: 100%;" required>
+            </div>
+            <button class="btn btn-success my-2 my-sm-0" type="submit" data-toggle="collapse" data-target="#collapseData" aria-expanded="false" aria-controls="collapseData">Search</button>
+        </form>
     </nav>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <div class="ui five item menu" style="margin-top: 0px;">
-      <a class="item" href="{{ url_for('home') }}"><i class="fa fa-home"></i>Home</a>
-      <a class="item" href="{{ url_for('newpost') }}"><i class="fa fa-address-card"></i>New Post</a>
-      <a class="item" href="{{ url_for('edit') }}"><i class="fa fa-address-book"></i>Edit Profile</a>
-      <a class="item" href="{{ url_for('profile') }}"><i class="fa fa-user-circle"></i>Profile</a>
-      <a class="item" href="{{ url_for('logout') }}"><i class="fa fa-sign-out"></i>Logout</a>
+        <a class="item" href="{{ url_for('home') }}" style="color: white;background-color: navy;"><i class="fa fa-home"></i>Home</a>
+        <a class="item" href="{{ url_for('newpost') }}" style="color: white;background-color: darkblue;"><i class="fa fa-address-card"></i>New Post</a>
+        <a class="item" href="{{ url_for('edit') }}" style="color: white;background-color: navy;"><i class="fa fa-address-book"></i>Edit Profile</a>
+        <a class="item" href="/profile/{{current_user.username}}" style="color: white;background-color: darkblue;"><i class="fa fa-user-circle"></i>Profile</a>
+        <a class="item" href="{{ url_for('logout') }}" style="color: white;background-color: navy;"><i class="fa fa-sign-out"></i>Logout</a>
     </div>
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-        
-          {% for message in messages %}
-          <div style="display: flex;justify-content: center;margin-top: 10px;">
-          <div class="alert alert-danger" role="alert" style = "width:95%" >
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> {% with messages = get_flashed_messages() %} {% if messages %} {% for message in messages %}
+    <div style="display: flex;justify-content: center;margin-top: 10px;">
+        <div class="alert alert-danger" role="alert" style="width:95%">
             <p class="text-center" style="color: red; justify-content: center;margin-bottom: 0;">{{ message }} </p>
-          </div>
-          </div>
-          {% endfor %}
-        
-    {% endif %}
-  {% endwith %}
-    <div>
-      {% block content %}{% endblock %}
+        </div>
     </div>
-  </body>
+    {% endfor %} {% endif %} {% endwith %}
+    <div>
+        {% block content %}{% endblock %}
+    </div>
+</body>
+
 </html>
