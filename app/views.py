@@ -222,3 +222,18 @@ def search_results(query):
     return render_template('search_results.html',
                            query=query,
                            results=results, message=message)
+
+@app.route('/delete_post/<postid>')
+@login_required
+def delete_post(postid):
+    post = models.Post.query.filter_by(postid = postid).first()
+    if (post.user == current_user.userid):
+        if (os.path.exists(app.config['IMAGE_UPLOADS']+ str(post.postid)+'.png')):
+            os.remove(os.path.join(app.config['IMAGE_UPLOADS'], str(post.postid)+'.png'))
+        db.session.delete(post)
+        db.session.commit()
+        flash("deleted post")
+        return redirect(request.referrer)
+    else:
+        flash("you have no access to delete others post")
+    return redirect(url_for("home"))
