@@ -23,7 +23,7 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-severityList = ['TEST', 'WARNING', 'UPDATE', 'SEVERE']
+severityList = ['ACTIVITY', 'WARNING', 'UPDATE', 'SEVERE']
 def appLog( severe, log ):
 	file = open("log.txt", "a")
 	file.write("{1} -- {0} | {2}\n".format(severityList[severe], datetime.now().strftime("%Y-%m-%d %H:%M"), log))
@@ -48,7 +48,7 @@ def login():
             if check_password_hash(user.password, form.password.data):
                 session['email'] = user.email
                 login_user(user, remember=form.remember.data)
-                appLog(1, "{0} has logged".format(user.email))
+                appLog(0, "{0} has logged".format(user.email))
                 return redirect(url_for('home'))
             else:
                 appLog(3, "{0} tried loggin' w/ incorrect password".format(user.email))
@@ -106,8 +106,10 @@ def profile(userprofile):
          followers.append( users)
      if userfollowing > 0:
          following.append( users)
-    if len(userposts) == 0:
+    if len(userposts) == 0 :
         message += "No posts Uploaded"
+    if (current_user.is_following(Profileuser) ==0 and current_user != Profileuser) :
+        message += "plz follow to see the posts"
     return render_template('profile.html',userposts = userposts,userfollowers=followers, userfollowing= following, message=message, user = Profileuser)
 
 @app.route('/newpost', methods=['GET', 'POST'])
@@ -148,9 +150,13 @@ def edit():
         files = request.files['image']
         image = files.filename
         file = request.files['image']
+        bio= request.form.get("bio")
+        updatebio = models.User.query.filter_by(userid=current_user.userid).update(dict(bio=bio))
+        db.session.commit()
         if (check_password_hash(current_user.password, form.oldpassword.data)):
             hashed_password = generate_password_hash(form.newpassword.data, method='sha256')
             updatePass = models.User.query.filter_by(userid=current_user.userid).update(dict(password=hashed_password))
+            appLog(1, "{0} has changed password".format(current_user.email))
             flash("password has changed successfully")
             db.session.commit()
         else:

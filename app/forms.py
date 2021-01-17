@@ -46,9 +46,9 @@ class SearchForm(Form):
     search = StringField('search', validators=[DataRequired()])
 
 class PasswordForm(Form):
-    oldpassword = PasswordField('Password', validators=[DataRequired()], render_kw={"placeholder": "Old Password"})
+    oldpassword = PasswordField('Password', render_kw={"placeholder": "Old Password"})
     newpassword = PasswordField('Password', [
-    validators.DataRequired(), Length(min=3, max=20),
+     Length(min=3, max=20),
     validators.EqualTo('newconfirmPassword', message='Passwords must match')],
     render_kw={"placeholder": "New Password"})
-    newconfirmPassword = PasswordField('newConfirmPassword', validators=[DataRequired()],render_kw={"placeholder": "Confirm Password"})
+    newconfirmPassword = PasswordField('newConfirmPassword',render_kw={"placeholder": "Confirm Password"})
