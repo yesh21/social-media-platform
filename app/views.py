@@ -153,7 +153,7 @@ def edit():
         bio= request.form.get("bio")
         updatebio = models.User.query.filter_by(userid=current_user.userid).update(dict(bio=bio))
         db.session.commit()
-        if (check_password_hash(current_user.password, form.oldpassword.data)):
+        if (check_password_hash(current_user.password, form.oldpassword.data) and len(form.newpassword.data) > 2 and form.newpassword.data==form.newconfirmPassword.data):
             hashed_password = generate_password_hash(form.newpassword.data, method='sha256')
             updatePass = models.User.query.filter_by(userid=current_user.userid).update(dict(password=hashed_password))
             appLog(1, "{0} has changed password".format(current_user.email))
